@@ -1,4 +1,4 @@
-# Workforce Demand Forecast App: Plan v0.4
+# Workforce Demand Forecast App: Plan v0.5
 
 Date: 30 Oct 2026. Owner: Boroon Mahanta. Status: draft for the weekly review.
 
@@ -57,15 +57,15 @@ Default squad template, configurable:
 
 A squad has 4 people and about 58 billable days a month at 80%.
 
-Core supply, excluding the outside contractors and people on leave:
+Core supply, excluding the outside contractors and people on leave. Brett Randall, Aditi Kulkarni, Kelly Broekstra and Paul Nash are counted as developers. The full list is in `data/supply.csv`:
 
 | Seat | Now | From January | Outside contractors, on demand |
 |---|---|---|---|
-| Architects | 4 | 4 | 1 |
-| Engineers | 7 | 8 | 2 |
+| Architects | 1 | 1 | 0 |
+| Engineers | 10 | 11 | 3 |
 | Delivery and change | 7 | 7 | 0 |
 
-That is 3 full squads now, limited by engineers, and 4 from January, with 3 spare delivery and change people. Total capacity is about 4.5 squad-equivalents at 80% now and 4.75 from January.
+That is 1 full squad, limited by architects, with the engineers and delivery staff to form more once architects are added. Total capacity is still about 4.5 squad-equivalents at 80% now and 4.75 from January.
 
 How demand looks in squads, at 100% labour share:
 
@@ -74,7 +74,7 @@ How demand looks in squads, at 100% labour share:
 | Ventia VenME | About 2.7 squads for 4 months, more than half of core capacity |
 | Pepper Money CCaaS | About 2.1 squads for 6 months |
 
-At the January peak with history-adjusted likelihoods, demand is about 7.8 squad-months against 4.75 available. The shortfall is about 3 squads. Engineers limit squad formation, not delivery and change staff, so the ask is engineers to complete squads, not heads in general. The three outside contractors cover about 3 of the roughly 12 people short.
+At the January peak with history-adjusted likelihoods, demand is about 7.5 squad-months against 4.75 available. Architects now limit squad formation, so the ask is architects and data engineers, not developers or delivery staff. The outside contractor pool covers about 3 of the people short.
 
 The app also provides:
 
@@ -138,16 +138,25 @@ Opportunity snapshot, Person, Squad, Squad template, Demand template per service
 
 ## 9. First-cut result the app must reproduce
 
-With history-adjusted likelihoods and core supply only, demand exceeds capacity from December to March and falls below it from April. At the January peak the shortfall is about 6 developers, 5 data engineers and 2.5 architects, roughly 12 people in total. Project managers and analysts have spare capacity. Dropping Pepper Money alone cuts the January peak by about 5 people.
+With history-adjusted likelihoods, all supply counted and the corrected contract dates, new hires are needed from December to June. At the January peak the need is about 9 people: 5.3 architects and 3.9 data engineers. Developers, project managers and analysts are covered. This matches the planner page.
 
-Monthly gap, history-adjusted:
+New hires needed by role, history-adjusted (the planner is the source of truth):
 
 | Month | Nov | Dec | Jan | Feb | Mar | Apr | May | Jun |
 |---|---|---|---|---|---|---|---|---|
-| Total gap in people | -2 | +6 | +12 | +6 | +1 | -3 | -7 | -11 |
-| Developers | +3.5 | +4.0 | +6.3 | +4.0 | +2.3 | +2.0 | +1.0 | -0.4 |
-| Data engineers | -1.0 | +3.8 | +4.6 | +3.4 | +2.2 | 0.0 | -1.8 | -2.6 |
-| Architects | -0.7 | +1.1 | +2.5 | +1.3 | +0.3 | -0.6 | -1.5 | -2.3 |
+| Architects | 1.5 | 3.7 | 5.3 | 4.0 | 3.0 | 2.2 | 1.3 | 0.5 |
+| Data engineers | 0 | 2.3 | 3.9 | 2.7 | 1.5 | 0 | 0 | 0 |
+| Developers | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Delivery and PM | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Analyst and strategy | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Total new hires | 1.5 | 6.1 | 9.1 | 6.7 | 4.5 | 2.2 | 1.3 | 0.5 |
+
+## Data files
+
+- `data/supply.csv`: every person counted as supply, with practice, role family, resource type, location and availability. Edit this first when someone changes role, type or leaves.
+- `data/contracts_committed.csv`: every won contract with its checked start and end, value, whether it is counted, and how the dates were verified. Dates were checked on 30 Oct 2026 against signed SOWs, Teams, email and Runn hours to 28 Sep.
+
+The planner page embeds the same values. Keep the files and the page in step.
 
 ## 9A. Utilisation file format
 
