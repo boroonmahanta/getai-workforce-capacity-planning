@@ -2,7 +2,7 @@
 
 Date: 30 Oct 2026. Owner: Boroon Mahanta. Status: draft for the weekly review.
 
-Changes since v0.1: labour share fixed at 100%, owner and hosting confirmed, contractors treated as fully flexible, and squads modelled from day one.
+Changes since v0.1: labour share fixed at 100%, owner and hosting confirmed, contractors treated as fully flexible, squads modelled from day one, and the squad template assumed agreed by the practice leaders.
 
 ## 1. Purpose
 
@@ -23,7 +23,7 @@ The one decision it must make easier: **hire, flex or wait**, per role family, p
 | Labour share | 100% of contract value is this team's labour |
 | Contractors | Casual, no end dates. Treated as flexible capacity: first to grow for peaks, first to release when demand falls |
 | Pipeline trust | Calibrate from history. Leads can override a deal; every override is logged |
-| Squads | Modelled from day one, alongside role families |
+| Squads | Modelled from day one, alongside role families. Template assumed agreed by the practice leaders |
 | Deadline | Usable by end of November, to inform the early-December decision |
 | Capacity scope | AI Business Solutions and Cloud & AI Platforms, 22 people. Sandeep and Scott as backup for governance work only. The 8 Manila service and security staff are excluded |
 | Utilisation target | 80% |
@@ -140,7 +140,7 @@ With history-adjusted likelihoods, demand exceeds capacity from December to Marc
 
 | Week | Deliverable |
 |---|---|
-| 2 to 6 Nov | Spec and schema. Importers and data checks. Existing model ported into a tested module. Squad template agreed with Matt and Greg |
+| 2 to 6 Nov | Spec and schema. Importers and data checks. Existing model ported into a tested module. Squad template taken as agreed |
 | 9 to 13 Nov | Demand and supply engines, simulation, calibration. First forecast screen with the squad view |
 | 16 to 20 Nov | Recommendation engine, ladder and triggers, squad board, weekly diff, override log, Entra sign-in |
 | 23 to 27 Nov | What-if agent, requisition drafts, dry run of the review on real files, deploy |
@@ -164,3 +164,4 @@ If time slips, cut in this order: what-if agent, then requisition drafts. The fo
 - D365 hygiene: 151 of 437 rows have a placeholder duration and 7 open deals have past start dates.
 - Rates and contractor data need tight access control.
 - The utilisation file format is not yet defined.
+- The squad template agreement is an assumption. Confirm it in writing before the first live review.
