@@ -1,8 +1,8 @@
-# Workforce Demand Forecast App: Plan v0.2
+# Workforce Demand Forecast App: Plan v0.3
 
 Date: 30 Oct 2026. Owner: Boroon Mahanta. Status: draft for the weekly review.
 
-Changes since v0.1: labour share fixed at 100%, owner and hosting confirmed, contractors treated as fully flexible, squads modelled from day one, and the squad template assumed agreed by the practice leaders.
+Changes since v0.1: labour share fixed at 100%, owner and hosting confirmed, contractors treated as fully flexible, squads modelled from day one, and the squad template assumed agreed by the practice leaders. v0.3 defines the utilisation file from the Runn timesheet snapshot already in hand and adds a measured baseline.
 
 ## 1. Purpose
 
@@ -18,7 +18,7 @@ The one decision it must make easier: **hire, flex or wait**, per role family, p
 | Platform | Standalone web app, built in this repo, hosted in Boroon's Azure tenant |
 | Autonomy | Advise and draft. Requisition and candidate-pool drafts need human approval |
 | Audience | Internal only. Data and logic kept separate so this can change later |
-| Data feeds v1 | Weekly file upload: D365 opportunity export, headcount sheet, utilisation file |
+| Data feeds v1 | Weekly file upload: D365 opportunity export, headcount sheet, utilisation file in the Runn timesheet format below |
 | Owner | Boroon owns the weekly upload and the review |
 | Labour share | 100% of contract value is this team's labour |
 | Contractors | Casual, no end dates. Treated as flexible capacity: first to grow for peaks, first to release when demand falls |
@@ -131,10 +131,49 @@ Opportunity snapshot, Person, Squad, Squad template, Demand template per service
 | Working days a month | 18 | Net of leave and holidays |
 | Win-rate haircut | 0.6 times CRM likelihood | Last 12 months: 18% and 24% by value |
 | Contractor availability | On demand, confirmed at each review | No end dates, because they are casual |
+| Realisation factor | Measured weekly from the utilisation file | About 0.72 on the first check. Default stays at 100% as instructed |
 
 ## 9. First-cut result the app must reproduce
 
 With history-adjusted likelihoods, demand exceeds capacity from December to March and falls below it from April. At the January peak the shortfall is about 4 developers and 5 data engineers, with architects 1.5 short. Project managers and analysts have spare capacity. Dropping Pepper Money alone cuts the January peak by about 5 people.
+
+## 9A. Utilisation file format
+
+The file is the Runn timesheet extract that Finance already publishes in the billability dashboard on the Finance team site. The snapshot dated 7 Oct 2026 has 260 rows covering six weeks from 24 Aug to 28 Sep 2026. One row is one person, one project and one week.
+
+| Column | Example |
+|---|---|
+| Project team | AI Business Solutions |
+| Client | Brisbane Airport |
+| Project | Operational Governance (T&M) |
+| Person primary team | AI Business Solutions |
+| Person | Alejandro Moran |
+| Billable flag | Billable or Non-Billable |
+| Pricing model | Time and Materials, Fixed Price or Non-Billable |
+| Delivery status | Active |
+| Week beginning | 24/08/2026 |
+| Hours | 4 |
+
+The app accepts a CSV with these columns. Until Finance publishes a CSV, it can read the dashboard's embedded data. Internal time is any row where the client is GET AI Pty Ltd.
+
+The latest week in the snapshot is 28 Sep. The first live review needs an updated extract.
+
+## 9B. Measured baseline from that file
+
+For the 22 in-scope people over the six weeks to 28 Sep, at 40 hours a week each:
+
+| Measure | Value |
+|---|---|
+| Billable hours | 1,385 |
+| Internal hours | 958 |
+| Pre-sales and other non-billable hours | 178 |
+| Billable utilisation | 26% |
+| Target | 80% |
+| Billable days a month | About 125, against about 317 capacity at 80% |
+
+Four people logged no time at all: David Gaviria, Juan Puerta, Nirmani Ranchagoda and Paul Nash. They may be on leave, on unlogged work, or not using Runn. The three casuals also log fewer hours than 40 a week, which understates their utilisation.
+
+Calibration check: the CRM-derived model gives about 239 days for the same period from won deals. Actual billable days were about 173. So at 100% labour share the model runs about 40% high. The app will compute this realisation factor from the file every week and show it as a sensitivity. The default stays at 100% as instructed.
 
 ## 10. Roadmap to end of November
 
@@ -158,10 +197,10 @@ If time slips, cut in this order: what-if agent, then requisition drafts. The fo
 
 ## 12. Risks and open items
 
-- No Runn export. Utilisation relies on uploaded files and the Finance billability snapshot, which may be incomplete.
+- No direct Runn export. Utilisation relies on the Finance billability extract, which ends at 28 Sep and may be incomplete.
 - The 100% labour share is the biggest swing factor in the forecast.
 - A handful of deals drive the forecast. The tool must show the deals behind every gap.
 - D365 hygiene: 151 of 437 rows have a placeholder duration and 7 open deals have past start dates.
 - Rates and contractor data need tight access control.
-- The utilisation file format is not yet defined.
+- Four in-scope people show no logged time, which needs explaining before the numbers are used in a review.
 - The squad template agreement is an assumption. Confirm it in writing before the first live review.
