@@ -183,7 +183,7 @@ For the 18 core people over the six weeks to 28 Sep, at 40 hours a week each:
 | Target | 80% |
 | Billable days a month | About 125, against about 259 capacity at 80% |
 
-The three outside contractors and Nirmani Ranchagoda are excluded from this base. The outside contractors do log time in Runn. "David Puerta" is Juan Puerta, confirmed. The flex pool billed only 77 hours in six weeks, about 10 days, and David Gaviria and Paul Nash logged nothing and are confirmed idle, so the pool is almost entirely unused. The three casuals also log fewer hours than 40 a week, which understates their utilisation.
+The three outside contractors and Nirmani Ranchagoda are excluded from this base. The outside contractors do log time in Runn. "David Puerta" is Juan Puerta, confirmed. The flex pool billed only 77 hours in six weeks, about 10 days, and David Gaviria and Paul Nash logged nothing and are confirmed idle, so the pool is almost entirely unused. The two casuals also log fewer hours than 40 a week, which understates their utilisation. Hannah Sohail was casual in the six weeks measured and is now permanent and onshore.
 
 Calibration check: the CRM-derived model gives about 239 days for the same period from won deals. Actual billable days were about 173. So at 100% labour share the model runs about 40% high. The app will compute this realisation factor from the file every week and show it as a sensitivity. The default stays at 100% as instructed.
 
