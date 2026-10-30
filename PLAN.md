@@ -183,7 +183,7 @@ For the 18 core people over the six weeks to 28 Sep, at 40 hours a week each:
 | Target | 80% |
 | Billable days a month | About 125, against about 259 capacity at 80% |
 
-The three outside contractors and Nirmani Ranchagoda are excluded from this base. The three casuals also log fewer hours than 40 a week, which understates their utilisation.
+The three outside contractors and Nirmani Ranchagoda are excluded from this base. The outside contractors do log time in Runn. If "David Puerta" is Juan Puerta, the flex pool billed only 77 hours in six weeks, about 10 days, and David Gaviria and Paul Nash logged nothing, so the pool is almost entirely unused. The three casuals also log fewer hours than 40 a week, which understates their utilisation.
 
 Calibration check: the CRM-derived model gives about 239 days for the same period from won deals. Actual billable days were about 173. So at 100% labour share the model runs about 40% high. The app will compute this realisation factor from the file every week and show it as a sensitivity. The default stays at 100% as instructed.
 
@@ -191,7 +191,7 @@ Calibration check: the CRM-derived model gives about 239 days for the same perio
 
 | Week | Deliverable |
 |---|---|
-| 2 to 6 Nov | Spec and schema. Importers and data checks. Existing model ported into a tested module. Squad template taken as agreed |
+| 2 to 6 Nov | Spec and schema. Importers, an alias table for names that differ between Runn and the headcount sheet, and data checks. Existing model ported into a tested module. Squad template taken as agreed |
 | 9 to 13 Nov | Demand and supply engines, simulation, calibration. First forecast screen with the squad view |
 | 16 to 20 Nov | Recommendation engine, ladder and triggers, squad board, weekly diff, override log, Entra sign-in |
 | 23 to 27 Nov | What-if agent, requisition drafts, dry run of the review on real files, deploy |
@@ -214,5 +214,5 @@ If time slips, cut in this order: what-if agent, then requisition drafts. The fo
 - A handful of deals drive the forecast. The tool must show the deals behind every gap.
 - D365 hygiene: 151 of 437 rows have a placeholder duration and 7 open deals have past start dates.
 - Rates and contractor data need tight access control.
-- The outside contractors do not log time in Runn, so any billable work they do is invisible in the utilisation file.
+- Runn names do not always match the headcount sheet. "David Puerta" in Runn logged 77 billable hours on Brisbane Airport and Graebel but is not in the sheet. He is probably Juan Puerta, to be confirmed. "Matt Noble" in Runn is Matthew Noble in the sheet. The importer needs an alias table.
 - The squad template agreement is an assumption. Confirm it in writing before the first live review.
