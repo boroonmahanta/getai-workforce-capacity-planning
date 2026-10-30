@@ -1,8 +1,8 @@
-# Workforce Demand Forecast App: Plan v0.3
+# Workforce Demand Forecast App: Plan v0.4
 
 Date: 30 Oct 2026. Owner: Boroon Mahanta. Status: draft for the weekly review.
 
-Changes since v0.1: labour share fixed at 100%, owner and hosting confirmed, contractors treated as fully flexible, squads modelled from day one, and the squad template assumed agreed by the practice leaders. v0.3 defines the utilisation file from the Runn timesheet snapshot already in hand and adds a measured baseline.
+Changes since v0.1: labour share fixed at 100%, owner and hosting confirmed, contractors treated as fully flexible, squads modelled from day one, and the squad template assumed agreed by the practice leaders. v0.3 defines the utilisation file from the Runn timesheet snapshot already in hand and adds a measured baseline. v0.4 takes three outside contractors out of core capacity and removes Nirmani Ranchagoda until her return in January.
 
 ## 1. Purpose
 
@@ -25,7 +25,9 @@ The one decision it must make easier: **hire, flex or wait**, per role family, p
 | Pipeline trust | Calibrate from history. Leads can override a deal; every override is logged |
 | Squads | Modelled from day one, alongside role families. Template assumed agreed by the practice leaders |
 | Deadline | Usable by end of November, to inform the early-December decision |
-| Capacity scope | AI Business Solutions and Cloud & AI Platforms, 22 people. Sandeep and Scott as backup for governance work only. The 8 Manila service and security staff are excluded |
+| Capacity scope | AI Business Solutions and Cloud & AI Platforms: 18 core people now, 19 from January. Sandeep and Scott as backup for governance work only. The 8 Manila service and security staff are excluded |
+| External flex pool | David Gaviria, Juan Puerta and Paul Nash are outside contractors used on demand. They are not in core capacity or the utilisation base |
+| Leave | Nirmani Ranchagoda is on parental leave and returns in January. She is excluded from supply until then |
 | Utilisation target | 80% |
 | Hire lead time | 4 to 6 weeks, planned at 6 |
 
@@ -36,7 +38,7 @@ At each weekly review:
 1. **Upload** the three files. The app checks them and lists data problems: placeholder durations, start dates in the past, missing fields.
 2. **Calibrate** the pipeline. It replaces raw CRM likelihoods with likelihoods adjusted by historical win rates by practice and value band, and slips stale start dates.
 3. **Demand engine.** Each open or won opportunity becomes labour days: contract value divided by the blended day rate, phased by month, split into role families using the SOW staffing templates, and run through a simulation to give P10, P50 and P90 demand. The same days are also shown as squad-months.
-4. **Supply engine.** People, availability of 18 working days a month, 80% target, contractor flex flags, leave and ramp-up inputs, and the backup rule for Sandeep and Scott.
+4. **Supply engine.** People, availability of 18 working days a month, 80% target, an external flex pool for outside contractors, leave and return dates, ramp-up inputs, and the backup rule for Sandeep and Scott.
 5. **Squad view.** Supply and demand in squads, with the role that limits the next squad.
 6. **Gap and recommendation engine.** Gap by role family, squad and month, then the decision ladder below.
 7. **Draft actions.** Requisition drafts, candidate-pool triggers and contractor ramp-up or release notes, each held for approval.
@@ -55,24 +57,24 @@ Default squad template, configurable:
 
 A squad has 4 people and about 58 billable days a month at 80%.
 
-Current supply from the headcount sheet:
+Core supply, excluding the outside contractors and people on leave:
 
-| Seat | People |
-|---|---|
-| Architects | 5 |
-| Engineers | 10 |
-| Delivery and change | 7 |
+| Seat | Now | From January | Outside contractors, on demand |
+|---|---|---|---|
+| Architects | 4 | 4 | 1 |
+| Engineers | 7 | 8 | 2 |
+| Delivery and change | 7 | 7 | 0 |
 
-That is 5 full squads, with 2 spare delivery and change people. Total capacity is about 5.5 squad-equivalents at 80%.
+That is 3 full squads now, limited by engineers, and 4 from January, with 3 spare delivery and change people. Total capacity is about 4.5 squad-equivalents at 80% now and 4.75 from January.
 
 How demand looks in squads, at 100% labour share:
 
 | Deal | Weighted view |
 |---|---|
-| Ventia VenME | About 2.7 squads for 4 months, half of all capacity |
+| Ventia VenME | About 2.7 squads for 4 months, more than half of core capacity |
 | Pepper Money CCaaS | About 2.1 squads for 6 months |
 
-At the January peak with history-adjusted likelihoods, demand is about 7.2 squad-months against 5.5 available. The shortfall is about 1.7 squads. Engineers limit squad formation, not delivery and change staff, so the hiring ask is "engineers to complete one or two squads", not heads in general.
+At the January peak with history-adjusted likelihoods, demand is about 7.8 squad-months against 4.75 available. The shortfall is about 3 squads. Engineers limit squad formation, not delivery and change staff, so the ask is engineers to complete squads, not heads in general. The three outside contractors cover about 3 of the roughly 12 people short.
 
 The app also provides:
 
@@ -131,11 +133,21 @@ Opportunity snapshot, Person, Squad, Squad template, Demand template per service
 | Working days a month | 18 | Net of leave and holidays |
 | Win-rate haircut | 0.6 times CRM likelihood | Last 12 months: 18% and 24% by value |
 | Contractor availability | On demand, confirmed at each review | No end dates, because they are casual |
+| Leave and returns | Entered as availability dates | Nirmani Ranchagoda returns in January, assumed first week |
 | Realisation factor | Measured weekly from the utilisation file | About 0.72 on the first check. Default stays at 100% as instructed |
 
 ## 9. First-cut result the app must reproduce
 
-With history-adjusted likelihoods, demand exceeds capacity from December to March and falls below it from April. At the January peak the shortfall is about 4 developers and 5 data engineers, with architects 1.5 short. Project managers and analysts have spare capacity. Dropping Pepper Money alone cuts the January peak by about 5 people.
+With history-adjusted likelihoods and core supply only, demand exceeds capacity from December to March and falls below it from April. At the January peak the shortfall is about 6 developers, 5 data engineers and 2.5 architects, roughly 12 people in total. Project managers and analysts have spare capacity. Dropping Pepper Money alone cuts the January peak by about 5 people.
+
+Monthly gap, history-adjusted:
+
+| Month | Nov | Dec | Jan | Feb | Mar | Apr | May | Jun |
+|---|---|---|---|---|---|---|---|---|
+| Total gap in people | -2 | +6 | +12 | +6 | +1 | -3 | -7 | -11 |
+| Developers | +3.5 | +4.0 | +6.3 | +4.0 | +2.3 | +2.0 | +1.0 | -0.4 |
+| Data engineers | -1.0 | +3.8 | +4.6 | +3.4 | +2.2 | 0.0 | -1.8 | -2.6 |
+| Architects | -0.7 | +1.1 | +2.5 | +1.3 | +0.3 | -0.6 | -1.5 | -2.3 |
 
 ## 9A. Utilisation file format
 
@@ -160,18 +172,18 @@ The latest week in the snapshot is 28 Sep. The first live review needs an update
 
 ## 9B. Measured baseline from that file
 
-For the 22 in-scope people over the six weeks to 28 Sep, at 40 hours a week each:
+For the 18 core people over the six weeks to 28 Sep, at 40 hours a week each:
 
 | Measure | Value |
 |---|---|
 | Billable hours | 1,385 |
 | Internal hours | 958 |
 | Pre-sales and other non-billable hours | 178 |
-| Billable utilisation | 26% |
+| Billable utilisation | 32% |
 | Target | 80% |
-| Billable days a month | About 125, against about 317 capacity at 80% |
+| Billable days a month | About 125, against about 259 capacity at 80% |
 
-Four people logged no time at all: David Gaviria, Juan Puerta, Nirmani Ranchagoda and Paul Nash. They may be on leave, on unlogged work, or not using Runn. The three casuals also log fewer hours than 40 a week, which understates their utilisation.
+The three outside contractors and Nirmani Ranchagoda are excluded from this base. The three casuals also log fewer hours than 40 a week, which understates their utilisation.
 
 Calibration check: the CRM-derived model gives about 239 days for the same period from won deals. Actual billable days were about 173. So at 100% labour share the model runs about 40% high. The app will compute this realisation factor from the file every week and show it as a sensitivity. The default stays at 100% as instructed.
 
@@ -202,5 +214,5 @@ If time slips, cut in this order: what-if agent, then requisition drafts. The fo
 - A handful of deals drive the forecast. The tool must show the deals behind every gap.
 - D365 hygiene: 151 of 437 rows have a placeholder duration and 7 open deals have past start dates.
 - Rates and contractor data need tight access control.
-- Four in-scope people show no logged time, which needs explaining before the numbers are used in a review.
+- The outside contractors do not log time in Runn, so any billable work they do is invisible in the utilisation file.
 - The squad template agreement is an assumption. Confirm it in writing before the first live review.
